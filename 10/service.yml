@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-service  # اسم جدید برای سرویس لود بالانسر
+spec:
+  type: LoadBalancer        # این خط کلید ماجراست
+  selector:
+    app: node-app       # وصلش می‌کنیم به همون پادهای نود جی‌اس
+  ports:
+    - port: 80          # پورت سرویس (داخل کلاستر)
+      targetPort: 3000  # پورت کانتینر (نود جی‌اس)
