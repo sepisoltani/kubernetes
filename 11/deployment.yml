@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+      - name: node-app
+        image: sepehrsoltani/node-app:v2  # این مهمترین بخششه
+        ports:
+        - containerPort: 3000
+        env:                     # این بخش رو اضافه میکنیم
+        - name: DATABASE_PASS    # اسمی که تو کد نود جی‌اس با process.env میخونیم
+          valueFrom:
+            secretKeyRef:        # میگیم برو از سکرت بخون
+              name: app-secrets  # اسم گاوصندوق
+              key: db-password   # اسم کلیدی که تو گاوصندوق گذاشتیم
